@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!--<form action="http://sun.wind.com:8085/user/deleteUser" method="post">-->
+    <!--<input type="text" name="userId" value="7">-->
+    <!--<input type="submit" value="click">-->
+<!--</form>-->
+
+<button onclick="formSubmit()">formSubmit</button>
+
+<script src="../lib/ajax.js"></script>
+<script>
+    function formSubmit(){
+        const data = {
+            userId: 9,
+        };
+        Ajax.postData("http://sun.wind.com:8085/user/deleteUser", data)
+            .then(data => {
+                console.log(data);
+            })
+    }
+</script>
+</body>
+</html>

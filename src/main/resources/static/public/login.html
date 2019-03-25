@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+</head>
+<body>
+<h1>Login, please!</h1>
+<button onclick="register()">register</button>
+<button onclick="login()">login</button>
+<button onclick="logout()">logout</button>
+<button onclick="getUserList()">getUserList</button>
+<button onclick="importUserList()">importUserList</button>
+<button onclick="getAllUsersByAuthUser()">getAllUsersByAuthUser</button>
+
+<button onclick="formSubmit()">formSubmit</button>
+<!--<script src="../lib/ajax.js"></script>-->
+<script>
+    const user = {
+        username: "wind",
+        autoLogin: true,
+        password: "wind"
+    }
+
+    function register(){
+        Ajax.postData(
+            // 'http://sun.wind.com:8085/spring-session/user/register', user)
+            'http://sun.wind.com:8085/user/register', user)
+            .then((data) =>{
+                console.log(data);
+        });
+    }
+    function login(){
+        console.log(user);
+        Ajax.postData(
+            // 'http://sun.wind.com:8085/spring-session/user/login', user)
+            'http://sun.wind.com:8085/user/login', user)
+            .then((data) =>{
+                console.log(data);
+        });
+    }
+    function logout(){
+        Ajax.postData(
+            // 'http://sun.wind.com:8085/spring-session/user/logout', user)
+            'http://sun.wind.com:8085/user/logout')
+            .then((data) =>{
+                console.log(data);
+        });
+    }
+    function getUserList(){
+        const data = {
+          page: 3,
+          pageSize: 2
+        };
+        Ajax.getData(
+            // 'http://sun.wind.com:8085/spring-session/user/getUserList', data)
+            'http://sun.wind.com:8085/user/getUserList', data)
+            .then(data => {
+            console.log(data);
+        });
+    }
+    function importUserList(){
+        const userList = [{
+            username: 'gaga',
+            password: 'gaga'
+        },{
+            username: 'be',
+            password: 'be'
+        },{
+            username: 'love',
+            password: 'love'
+        },{
+            username: 'wind',
+            password: 'wind'
+        },{
+            username: 'sun',
+            password: 'sun'
+        },{
+            username: 'brave',
+            password: 'brave'
+        }];
+        Ajax.postJSON(
+            // 'http://sun.wind.com:8085/spring-session/user/importUserList', userList)
+            'http://sun.wind.com:8085/user/importUserList', userList)
+            .then(data => {
+                console.log(data);
+        });
+    }
+    function getAllUsersByAuthUser() {
+        Ajax.getData(
+            // 'http://sun.wind.com:8085/spring-session/user/getUserList', data)
+            'http://sun.wind.com:8085/user/getAllUsers')
+            .then(data => {
+                console.log(data);
+            });
+    }
+    function formSubmit(){
+        const data = {
+            userId: 9
+        };
+        Ajax.postData("http://sun.wind.com:8085/user/deleteUser", data)
+            .then(data => {
+                console.log(data);
+            })
+    }
+</script>
+</body>
+</html>

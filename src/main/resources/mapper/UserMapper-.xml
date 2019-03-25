@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wind.springsession.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.wind.springsession.model.User" >
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, username, password, phone_number, create_time, update_time, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wind.springsession.model.User" >
+    <selectKey resultType="java.lang.Integer" keyProperty="userId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user (username, password, phone_number, 
+      create_time, update_time, status
+      )
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wind.springsession.model.User" >
+    <selectKey resultType="java.lang.Integer" keyProperty="userId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wind.springsession.model.User" >
+    update user
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wind.springsession.model.User" >
+    update user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="selectByUsernameAndPassword" resultMap="BaseResultMap">
+    select user_id, username, password, create_time, update_time
+    from user
+    where username = #{username,jdbcType=VARCHAR}
+    and password = #{password,jdbcType=VARCHAR}
+  </select>
+
+  <!--<insert id="insertUniqueUser" parameterType="com.wind.springsession.model.User">-->
+    <!--<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >-->
+      <!--SELECT LAST_INSERT_ID()-->
+    <!--</selectKey>-->
+    <!--insert ignore-->
+    <!--into user (username, password)-->
+    <!--values (#{username,jdbcType=VARCHAR},-->
+      <!--#{password,jdbcType=VARCHAR})-->
+  <!--</insert>-->
+
+  <insert id="insertUniqueUser" parameterType="com.wind.springsession.model.User">
+    insert ignore
+    into user (username, password)
+    values (#{username,jdbcType=VARCHAR},
+    #{password,jdbcType=VARCHAR})
+  </insert>
+
+  <select id="getUserList" resultMap="BaseResultMap">
+    select username, create_time, update_time
+    from user
+    order by create_time desc
+    limit #{limit, jdbcType=INTEGER}
+    offset #{offset, jdbcType=INTEGER}
+  </select>
+  <!--<select id="getUserList" resultMap="BaseResultMap">-->
+    <!--select username, create_time, update_time-->
+    <!--from user-->
+    <!--where id >=(-->
+      <!--select id-->
+      <!--from user-->
+      <!--where id > #{offset, jdbcType=INTEGER}-->
+      <!--order by id-->
+      <!--limit 1)-->
+    <!--limit #{limit, jdbcType=INTEGER}-->
+  <!--</select>-->
+
+  <insert id="importUserList" parameterType="java.util.List">
+    insert ignore into user(username, password)
+    values
+    <foreach collection="list" index="index" item="item"
+      separator=",">
+      (#{item.username, jdbcType=VARCHAR},
+      #{item.password, jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <select id="selectByUsername" resultMap="BaseResultMap">
+    select username, password
+    from user
+    where username = #{username, jdbcType=VARCHAR}
+  </select>
+</mapper>

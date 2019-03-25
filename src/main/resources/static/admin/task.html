@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quartz Job</title>
+</head>
+<body>
+
+<button onclick="addJob()">addJob</button>
+<button onclick="rescheduleJob()">rescheduleJob</button>
+<button onclick="deleteJob()">deleteJob</button>
+<button onclick="pauseJob()">pauseJob</button>
+<button onclick="resume()">resume</button>
+
+<script src="../lib/ajax.js"></script>
+<script>
+    function addJob(){
+        const jobData = {
+            jobName: "com.wind.springsession.task.Task",
+            jobGroup: "task",
+            cronExpression: "*/5 * * * * ?",
+            cronDescription: "every 5 second",
+            jobDescription: "log jobName"
+        };
+        Ajax.postData(
+            "http://localhost:8085/spring-session/task/add",
+            jobData).then(data => {
+                console.log(data);
+        });
+    }
+    function rescheduleJob(){
+        const jobData = {
+            jobName: "com.wind.springsession.task.Task",
+            jobGroup: "task",
+            cronExpression: "*/8 * * * * ?",
+            cronDescription: "every 8 second"
+        };
+        Ajax.postData(
+            "http://localhost:8085/spring-session/task/reschedule",
+            jobData).then(data => {
+            console.log(data);
+        });
+    }
+    function deleteJob(){
+        const jobData = {
+            jobName: "com.wind.springsession.task.Task",
+            jobGroup: "task",
+        };
+        Ajax.postData(
+            "http://localhost:8085/spring-session/task/delete",
+            jobData).then(data => {
+            console.log(data);
+        });
+    }
+    function pauseJob(){
+        const jobData = {
+            jobName: "com.wind.springsession.task.Task",
+            jobGroup: "task",
+        };
+        Ajax.postData(
+            "http://localhost:8085/spring-session/task/pause",
+            jobData).then(data => {
+            console.log(data);
+        });
+    }
+    function resume(){
+        const jobData = {
+            jobName: "com.wind.springsession.task.Task",
+            jobGroup: "task",
+        };
+        Ajax.postData(
+            "http://localhost:8085/spring-session/task/resume",
+            jobData).then(data => {
+            console.log(data);
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<!-- 数据库驱动包位置 -->
+	<classPathEntry
+			location="/var/IdeaProject/spring-session/src/main/resources/mybatis/mysql-connector-java-5.1.46.jar" />
+	<context id="DB2Tables" targetRuntime="MyBatis3">
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		<!-- 数据库链接URL、用户名、密码 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+						connectionURL="jdbc:mysql://192.168.56.102:3306/spring_session?characterEncoding=utf8"
+						userId="wind" password="wind">
+		</jdbcConnection>
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+		<!-- 生成模型的包名和位置 -->
+		<javaModelGenerator targetPackage="com.wind.springsession.model"
+							targetProject="/var/IdeaProject/spring-session/src/main/java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+		<!-- 生成的映射文件包名和位置 -->
+		<sqlMapGenerator targetPackage="mapper"
+						 targetProject="/var/IdeaProject/spring-session/src/main/resources">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+		<!-- 生成DAO的包名和位置 -->
+		<javaClientGenerator type="XMLMAPPER"
+							 targetPackage="com.wind.springsession.dao" targetProject="/var/IdeaProject/spring-session/src/main/java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+		<!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
+		<!--<table tableName="user" domainObjectName="User"-->
+			<!--enableCountByExample="false" enableUpdateByExample="false"-->
+			<!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			<!--selectByExampleQueryId="false">-->
+			<!--<generatedKey column="user_id" sqlStatement="mysql" identity="true" />-->
+		<!--</table>-->
+		<table tableName="user_thought" domainObjectName="UserThought"
+			   enableCountByExample="false" enableUpdateByExample="false"
+			   enableDeleteByExample="false" enableSelectByExample="false"
+			   selectByExampleQueryId="false">
+			<generatedKey column="thought_id" sqlStatement="mysql" identity="true" />
+		</table>
+		<!--<table tableName="goods_record" domainObjectName="GoodsRecord"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false">-->
+			<!--<generatedKey column="record_id" sqlStatement="mysql" identity="true" />-->
+		<!--</table>-->
+		<!--<table tableName="user_deposit" domainObjectName="UserDeposit"-->
+			   <!--enableCountByExample="false" enableUpdateByExample="false"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+			   <!--selectByExampleQueryId="false">-->
+			<!--<generatedKey column="deposit_id" sqlStatement="mysql" identity="true" />-->
+		<!--</table>-->
+	</context>
+</generatorConfiguration>
