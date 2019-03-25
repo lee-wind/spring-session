@@ -23,4 +23,4 @@ spring-session(Java 手稿--Continue)
 测试地址(打开控制台看请求头跟请求结果):  
 1、http://cloud.wind.com:8085/public/login.html  
 2、http://cloud.wind.com:8085/public/ajax.html  
-接口域名：http://sun.wind.com:8085  
+接口前缀：http://sun.wind.com:8085  
